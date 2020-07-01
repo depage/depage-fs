@@ -7,7 +7,7 @@ use Depage\Fs\Tests\TestClasses\FsFileTestClass;
 class FsFileTest extends OperationsTestCase
 {
     // {{{ setUp
-    public function setUp()
+    public function setUp():void
     {
         $this->assertTrue($this->src->setUp());
         $this->assertTrue(chdir($this->src->getRoot()));
@@ -16,7 +16,7 @@ class FsFileTest extends OperationsTestCase
     }
     // }}}
     // {{{ tearDown
-    public function tearDown()
+    public function tearDown():void
     {
         $this->assertTrue($this->src->tearDown());
 

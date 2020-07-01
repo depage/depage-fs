@@ -7,7 +7,7 @@ use Depage\Fs\Tests\TestClasses\PrivateSshKeyTestClass;
 class PrivateSshKeyTest extends PublicSshKeyTest
 {
     // {{{ setUp
-    public function setUp()
+    public function setUp():void
     {
         $this->keyPath = __DIR__ . '/' . $GLOBALS['PRIVATE_RSA_KEY'];
         $this->publicKeyPath = __DIR__ . '/' . $GLOBALS['PUBLIC_RSA_KEY'];

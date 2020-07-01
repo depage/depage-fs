@@ -3,8 +3,9 @@
 namespace Depage\Fs\Tests;
 
 use Depage\Fs\Tests\TestClasses\FtpCurlTestClass;
+use PHPUnit\Framework\TestCase;
 
-class FtpCurlTest extends \PHPUnit_Framework_TestCase
+class FtpCurlTest extends TestCase
 {
     // {{{ constructor
     public function __construct()
@@ -22,7 +23,7 @@ class FtpCurlTest extends \PHPUnit_Framework_TestCase
     // }}}
 
     // {{{ setUp
-    public function setUp()
+    public function setUp():void
     {
         FtpCurlTestClass::registerStream('ftp', ['caCert' => $this->cert]);
 
@@ -33,7 +34,7 @@ class FtpCurlTest extends \PHPUnit_Framework_TestCase
     }
     // }}}
     // {{{ tearDown
-    public function tearDown()
+    public function tearDown():void
     {
         FtpCurlTestClass::disconnect();
 

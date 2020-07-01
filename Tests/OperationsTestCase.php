@@ -2,7 +2,9 @@
 
 namespace Depage\Fs\Tests;
 
-abstract class OperationsTestCase extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+abstract class OperationsTestCase extends TestCase
 {
     // {{{ constructor
     public function __construct()
@@ -14,7 +16,7 @@ abstract class OperationsTestCase extends \PHPUnit_Framework_TestCase
     // }}}
 
     // {{{ setUp
-    public function setUp()
+    public function setUp():void
     {
         $this->assertTrue($this->src->setUp());
         $this->assertTrue($this->dst->setUp());
@@ -24,7 +26,7 @@ abstract class OperationsTestCase extends \PHPUnit_Framework_TestCase
     }
     // }}}
     // {{{ tearDown
-    public function tearDown()
+    public function tearDown():void
     {
         $this->assertTrue($this->src->tearDown());
         $this->assertTrue($this->dst->tearDown());

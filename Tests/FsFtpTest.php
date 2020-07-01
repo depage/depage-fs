@@ -17,7 +17,7 @@ class FsFtpTest extends OperationsTestCase
     // }}}
 
     // {{{ setUp
-    public function setUp()
+    public function setUp():void
     {
         FtpCurl::disconnect();
         parent::setUp();

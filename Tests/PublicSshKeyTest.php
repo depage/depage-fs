@@ -3,11 +3,12 @@
 namespace Depage\Fs\Tests;
 
 use Depage\Fs\Tests\TestClasses\PublicSshKeyTestClass;
+use PHPUnit\Framework\TestCase;
 
-class PublicSshKeyTest extends \PHPUnit_Framework_TestCase
+class PublicSshKeyTest extends TestCase
 {
     // {{{ setUp
-    public function setUp()
+    public function setUp():void
     {
         $this->keyPath = __DIR__ . '/' . $GLOBALS['PUBLIC_RSA_KEY'];
         $this->testKey = file_get_contents($this->keyPath);
