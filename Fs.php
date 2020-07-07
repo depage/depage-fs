@@ -346,9 +346,9 @@ class Fs
         }
 
         // hack, parse_url matches anything after the first question mark as "query"
-        $path = (isset($parsed['path'])) ? $parsed['path'] : null;
-        $query = (isset($parsed['query'])) ? $parsed['query'] : null;
-        if ($query !== null || preg_match('/\?$/', $url)) {
+        $path = (isset($parsed['path'])) ? $parsed['path'] : '';
+        $query = (isset($parsed['query'])) ? $parsed['query'] : '';
+        if (!empty($query) || preg_match('/\?$/', $url)) {
             $parsed['path'] = $path . '?' . $query;
             unset($parsed['query']);
         }
