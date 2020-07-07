@@ -3,6 +3,7 @@
 namespace Depage\Fs\Tests;
 
 use Depage\Fs\FsSsh;
+use Depage\Fs\Exceptions\FsException;
 
 class FsSshTest extends OperationsTestCase
 {

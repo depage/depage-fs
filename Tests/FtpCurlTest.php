@@ -8,8 +8,10 @@ use PHPUnit\Framework\TestCase;
 class FtpCurlTest extends TestCase
 {
     // {{{ constructor
-    public function __construct()
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
+        parent::__construct($name, $data, $dataName);
+
         $this->root = __DIR__;
         $this->cert = $this->root . '/' . $GLOBALS['CA_CERT'];
         $this->src = new HelperFsLocal($this->root . '/Temp');
