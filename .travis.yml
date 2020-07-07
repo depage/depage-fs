@@ -13,7 +13,7 @@ before_script:
     # install ftp server and ssh dependencies
     - sudo apt-get update
     - sudo apt-get install -y --force-yes proftpd-basic libssh2-1-dev openssh-server openssl
-    - printf "\n" | pecl install channel://pecl.php.net/ssh2-0.12
+    - printf "\n" | pecl install channel://pecl.php.net/ssh2-1.2
 
     # edit ftp server settings: root user to user directory, display hidden files
     - sudo bash -c 'cat /etc/proftpd/proftpd.conf | sed "s/^.*DefaultRoot.*$/DefaultRoot ~/" | sed "s/^.*ListOptions.*$/ListOptions \"-la\"/" | sed "s/^.*Include\s\+\/etc\/proftpd\/tls.conf\s*$/Include \/etc\/proftpd\/tls.conf/" > /etc/proftpd/proftpd.conf.tmp'
