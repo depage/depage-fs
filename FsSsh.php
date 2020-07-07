@@ -61,7 +61,10 @@ class FsSsh extends Fs
         if (!$this->session) {
             $connection = $this->getConnection($fingerprint);
 
-            if (strcasecmp($this->fingerprint, $fingerprint) !== 0) {
+            if (
+                !is_null($this->fingerprint) &&
+                strcasecmp($this->fingerprint, $fingerprint) !== 0
+            ) {
                 throw new Exceptions\FsException('SSH RSA Fingerprints don\'t match.');
             }
 
