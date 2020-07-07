@@ -49,4 +49,4 @@ before_script:
 
     - composer install
 
-script: phpunit --configuration Tests/PHPUnit.xml Tests/
+script: vendor/bin/phpunit --configuration Tests/PHPUnit.xml Tests/
