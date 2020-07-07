@@ -94,6 +94,15 @@ class FsFtpTest extends OperationsTestCase
         $this->assertFalse($this->fs->test($error));
     }
     // }}}
+
+    // {{{ testMkdirFail
+    public function testMkdirFail()
+    {
+        $this->expectExceptionMessage("Error while creating directory \"testDir/testSubDir\".");
+
+        return parent::testMkdirFail();
+    }
+    // }}}
 }
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */

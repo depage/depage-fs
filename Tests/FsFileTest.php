@@ -3,6 +3,7 @@
 namespace Depage\Fs\Tests;
 
 use Depage\Fs\Tests\TestClasses\FsFileTestClass;
+use Depage\Fs\Exceptions\FsException;
 
 class FsFileTest extends OperationsTestCase
 {
@@ -68,12 +69,10 @@ class FsFileTest extends OperationsTestCase
     }
     // }}}
     // {{{ testMkdirFail
-    /**
-     * @expectedException           Depage\Fs\Exceptions\FsException
-     * @expectedExceptionMessage    mkdir(): No such file or directory
-     */
     public function testMkdirFail()
     {
+        $this->expectExceptionMessage("mkdir(): No such file or directory");
+
         return parent::testMkdirFail();
     }
     // }}}
@@ -91,4 +90,4 @@ class FsFileTest extends OperationsTestCase
     // }}}
 }
 
-/* vim:set ft=php sw=4 sts=4 fdm=marker et : */
+// vim:set ft=php sw=4 sts=4 fdm=marker et :

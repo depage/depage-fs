@@ -213,7 +213,7 @@ class FsTest extends TestCase
         );
 
         $fs = $this->createTestObject($params);
-        $this->assertEquals('testScheme://testUser:@testHost/', $fs->pwd());
+        $this->assertEquals('testScheme://testUser@testHost/', $fs->pwd());
     }
     // }}}
 
