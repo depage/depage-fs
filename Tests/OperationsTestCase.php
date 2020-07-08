@@ -378,10 +378,10 @@ abstract class OperationsTestCase extends TestCase
     public function testMv()
     {
         $this->createFileDst('testFile');
-        $this->assertFalse($this->dst->is_file('/testFile2'));
+        $this->assertFalse($this->dst->is_file('testFile2'));
 
         $this->fs->mv('testFile', 'testFile2');
-        $this->assertFalse($this->dst->is_file('/testFile'));
+        $this->assertFalse($this->dst->is_file('testFile'));
         $this->assertTrue($this->dst->checkFile('testFile2'));
     }
     // }}}
