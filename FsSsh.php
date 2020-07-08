@@ -185,6 +185,7 @@ class FsSsh extends Fs
 
         if ($result) {
             parent::rename($source, $target);
+            clearstatcache();
             $result = is_file($target);
         }
 
