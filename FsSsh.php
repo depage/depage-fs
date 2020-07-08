@@ -184,8 +184,8 @@ class FsSsh extends Fs
         }
 
         if ($result) {
-            return parent::rename($source, $target);
-            //$result = is_file($target);
+            parent::rename($source, $target);
+            $result = is_file($target);
         }
 
         return $result;

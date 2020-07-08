@@ -88,6 +88,15 @@ class FsFileTest extends OperationsTestCase
         $this->assertEquals('file://' . $cwd . '/path/to/file', $fs->cleanUrl($cwd . '/path/to/file'));
     }
     // }}}
+
+    // {{{ testLateConnectInvalidDirectoryFail
+    public function testLateConnectInvalidDirectoryFail()
+    {
+        $this->expectExceptionMessage("directorydoesnotexist");
+
+        parent::testLateConnectInvalidDirectoryFail();
+    }
+    // }}}
 }
 
 // vim:set ft=php sw=4 sts=4 fdm=marker et :

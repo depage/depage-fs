@@ -267,15 +267,6 @@ class FsTest extends TestCase
         $this->assertSame($initialHandler, $this->currentErrorHandler());
     }
     // }}}
-
-    // {{{ testLateConnectInvalidDirectoryFail
-    public function testLateConnectInvalidDirectoryFail()
-    {
-        $this->expectExceptionMessage("directorydoesnotexist");
-
-        parent::testLateConnectInvalidDirectoryFail();
-    }
-    // }}}
 }
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */

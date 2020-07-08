@@ -72,8 +72,7 @@ class FsSshTest extends OperationsTestCase
     public function testLateConnectInvalidDirectoryFail()
     {
         $this->expectException(FsException::class);
-        $this->expectExceptionMessage("Unable to open ssh2.sftp://
-");
+        $this->expectExceptionMessage("Unable to open ssh2.sftp://");
 
         return parent::testLateConnectInvalidDirectoryFail();
     }

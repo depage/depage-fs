@@ -70,7 +70,7 @@ class FsFtpTest extends OperationsTestCase
     {
         $params = array(
             'path' => '/Temp',
-            'scheme' => 'ftp',
+            'scheme' => 'ftps',
             'host' => $GLOBALS['REMOTE_HOST'],
             'user' => $GLOBALS['REMOTE_USER'],
             'pass' => $GLOBALS['REMOTE_PASS'],
