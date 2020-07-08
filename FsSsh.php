@@ -180,6 +180,7 @@ class FsSsh extends Fs
         // workaround, rename doesn't overwrite files via ssh
         if (is_file($target) && is_file($source)) {
             $this->rm($target);
+            clearstatcache();
             $result = !is_file($target);
         }
 
