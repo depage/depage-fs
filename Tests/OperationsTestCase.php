@@ -554,7 +554,6 @@ abstract class OperationsTestCase extends TestCase
     public function testLateConnectInvalidDirectoryFail()
     {
         $this->expectException(FsException::class);
-        $this->expectExceptionMessage("directorydoesnotexist");
 
         $params = array('path' => 'directorydoesnotexist');
         $fs = $this->createTestObject($params);
