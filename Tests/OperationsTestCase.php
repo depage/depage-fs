@@ -539,7 +539,7 @@ abstract class OperationsTestCase extends TestCase
         $this->assertTrue($this->fs->test());
         $this->assertTrue($this->dst->tearDown());
         $this->assertFalse($this->fs->test($error));
-        $this->assertContains('file_put_contents', [$error]);
+        $this->assertStringContainsString('file_put_contents', $error);
     }
     // }}}
 
