@@ -184,7 +184,8 @@ class FsSsh extends Fs
         }
 
         if ($result) {
-            parent::rename($source, $target);
+            //parent::rename($source, $target);
+            \ssh2_sftp_rename($this->session, $source, $target);
             $result = is_file($target);
         }
 
