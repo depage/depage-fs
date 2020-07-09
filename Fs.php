@@ -188,6 +188,26 @@ class Fs
         $this->postCommandHook();
     }
     // }}}
+    // {{{ copy
+    public function copy($sourcePath, $targetPath)
+    {
+        $this->preCommandHook();
+
+        $source = $this->cleanUrl($sourcePath);
+        $target = $this->cleanUrl($targetPath);
+
+        if (file_exists($source)) {
+            if(file_exists($target) && is_dir($target)) {
+                $target .= '/' . $this->extractFileName($source);
+            }
+            \copy($source, $target, $this->streamContext);
+        } else {
+            throw new Exceptions\FsException('Cannot move "' . $this->cleanUrl($sourcePath, false) . '" to "' . $this->cleanUrl($targetPath, false) . '" - source doesn\'t exist.');
+        }
+
+        $this->postCommandHook();
+    }
+    // }}}
     // {{{ mv
     public function mv($sourcePath, $targetPath)
     {

@@ -374,6 +374,51 @@ abstract class OperationsTestCase extends TestCase
     }
     // }}}
 
+    // {{{ testCopy
+    public function testCopy()
+    {
+        $this->createFileDst('testFile');
+        $this->assertFalse($this->dst->is_file('testFile2'));
+
+        $this->fs->copy('testFile', 'testFile2');
+        $this->assertTrue($this->dst->is_file('testFile'));
+        $this->assertTrue($this->dst->checkFile('testFile2'));
+    }
+    // }}}
+    // {{{ testCopyOverwrite
+    public function testCopyOverwrite()
+    {
+        $this->createFileDst('testFile', 'before');
+        $this->createFileDst('testFile2', 'after');
+
+        $this->fs->copy('testFile2', 'testFile');
+        $this->assertTrue($this->dst->checkFile('testFile', 'after'));
+    }
+    // }}}
+    // {{{ testCopyIntoDirectory
+    public function testCopyIntoDirectory()
+    {
+        $this->createFileDst('testFile');
+        $this->mkdirDst('testDir');
+
+        $this->fs->copy('testFile', 'testDir');
+        $this->assertTrue($this->dst->is_file('testFile'));
+        $this->assertTrue($this->dst->checkFile('testDir/testFile'));
+    }
+    // }}}
+    // {{{ testCopySourceDoesntExist
+    public function testCopySourceDoesntExist()
+    {
+        $this->expectException(FsException::class);
+        $this->expectExceptionMessage("source doesn't exist");
+
+        $this->mkdirDst('testDir');
+        $this->assertFalse($this->dst->is_file('/testFile'));
+
+        $this->fs->copy('testFile', 'testDir/testFile');
+    }
+    // }}}
+
     // {{{ testMv
     public function testMv()
     {
