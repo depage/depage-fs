@@ -202,7 +202,7 @@ class Fs
             }
             \copy($source, $target, $this->streamContext);
         } else {
-            throw new Exceptions\FsException('Cannot move "' . $this->cleanUrl($sourcePath, false) . '" to "' . $this->cleanUrl($targetPath, false) . '" - source doesn\'t exist.');
+            throw new Exceptions\FsException('Cannot copy "' . $this->cleanUrl($sourcePath, false) . '" to "' . $this->cleanUrl($targetPath, false) . '" - source doesn\'t exist.');
         }
 
         $this->postCommandHook();
