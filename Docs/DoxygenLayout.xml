@@ -9,14 +9,14 @@
         <tab type="user" url="md__docs__validation.html" title="Validation"/>
     </tab>
     -->
-    <tab type="user" url="@ref Depage::Fs::Fs" title="FS Interface">
-        <tab type="user" url="@ref Depage::Fs::Fs" title="FS Interface" />
-        <tab type="user" url="@ref Depage::Fs::FsFile" title="Local File Access" />
-        <tab type="user" url="@ref Depage::Fs::FsFtp" title="FTP(S) Access" />
-        <tab type="user" url="@ref Depage::Fs::FsSsh" title="SSH/SFTP Access" />
-    </tab>
+    <tab type="user" url="@ref Depage::Fs::Fs" title="FS Interface" />
+    <tab type="user" url="@ref Depage::Fs::FsFile" title="Local File Access" />
+    <tab type="user" url="@ref Depage::Fs::FsFtp" title="FTP(S) Access" />
+    <tab type="user" url="@ref Depage::Fs::FsSsh" title="SSH/SFTP Access" />
 
     <tab type="examples" visible="no" title="Examples" intro=""/>
+
+    <tab type="user" url="." title="" />
 
     <tab type="classes" visible="yes" title="Classes">
       <tab type="classes" visible="no" title="Classes" intro=""/>
