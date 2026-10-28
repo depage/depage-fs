@@ -37,6 +37,13 @@ COPY sshd_tests.conf /etc/ssh/sshd_config.d/10-tests.conf
 
 RUN useradd -m -p co.yjyxRTlonU testuser
 
+# authorized_keys is baked in, not bind-mounted: a bind mount carries the
+# host's uid, which would not be writable by testuser on linux hosts
+COPY home/.ssh /home/testuser/.ssh
+RUN chown -R testuser:testuser /home/testuser/.ssh \
+    && chmod 700 /home/testuser/.ssh \
+    && chmod 600 /home/testuser/.ssh/authorized_keys
+
 EXPOSE 20 21 22
 
 CMD ["/usr/bin/supervisord"]

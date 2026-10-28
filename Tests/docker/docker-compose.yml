@@ -2,8 +2,6 @@ services:
   # mock server: vsftpd + sshd, the remote target for the tests
   server:
     build: .
-    volumes:
-      - ./home:/home/testuser
 
   # phpunit runner: mounts the project and talks to the server over this
   # compose network (REMOTE_HOST=server, see Tests/PHPUnit.xml)
