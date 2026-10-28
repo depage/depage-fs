@@ -121,6 +121,10 @@ requirement in composer.json):
 vendor/bin/phpcs -p         # checks the range from phpcs.xml.dist
 ```
 
+Tests/PHPUnit.xml sets `failOnDeprecation`, so a php deprecation (e.g. one
+introduced by a new php version in the matrix) fails the test run instead of
+only being counted in the summary.
+
 License (dual)
 --------------
 

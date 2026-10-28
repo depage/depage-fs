@@ -36,7 +36,7 @@ class Fs
         if (is_array($parsed)) {
             $params = array_merge($parsed, $params);
         }
-        $scheme = isset($params['scheme']) ? $params['scheme'] : null;
+        $scheme = $params['scheme'] ?? '';
         $alias = self::schemeAlias($scheme);
 
         $schemeClass = '\Depage\Fs\Fs' . ucfirst($alias['class']);
@@ -48,6 +48,9 @@ class Fs
     // {{{ schemeAlias
     protected static function schemeAlias($alias = '')
     {
+        // null would be deprecated as an array key in php 8.5
+        $alias = (string) $alias;
+
         $aliases = array(
             ''          => array('class' => 'file', 'scheme' => 'file'),
             'file'      => array('class' => 'file', 'scheme' => 'file'),
