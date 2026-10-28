@@ -15,6 +15,12 @@ a remote system.
 depage-fs virtually tracks the remote working directory (cd, pwd). Once the
 remote path is set, it prevents any operations in parent directories.
 
+Requirements
+============
+
+PHP 8.3 or later. The ftp(s) protocol needs the curl extension, the ssh
+protocol the ssh2 extension.
+
 Features
 ========
 
@@ -97,6 +103,23 @@ make -C Tests clean       # remove containers, volumes and test artifacts
 On CI (GitHub Actions) the same services are provisioned directly on the
 runner by Tests/ci/setup-services.sh (no docker), which allows testing a
 matrix of php versions (8.3, 8.4, 8.5) in parallel.
+
+Only Tests/FtpCurlErrorTest.php and the local tests run without those servers:
+
+```sh
+vendor/bin/phpunit --configuration Tests/PHPUnit.xml --filter FtpCurlErrorTest
+```
+
+PHP compatibility
+-----------------
+
+phpcs.xml.dist checks the code against the PHPCompatibility standard for the
+php range depage-fs supports (keep `testVersion` in sync with the `php`
+requirement in composer.json):
+
+```sh
+vendor/bin/phpcs -p         # checks the range from phpcs.xml.dist
+```
 
 License (dual)
 --------------

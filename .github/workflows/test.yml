@@ -30,5 +30,11 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
 
+      # checks the php range from phpcs.xml.dist, so the result does not depend
+      # on the php version running the check — one matrix job is enough
+      - name: PHP compatibility check
+        if: matrix.php-version == '8.3'
+        run: vendor/bin/phpcs -p
+
       - name: Run tests
         run: vendor/bin/phpunit --configuration Tests/PHPUnit.xml

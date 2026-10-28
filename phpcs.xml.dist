@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<ruleset name="depage-fs">
+    <description>Cross-version compatibility check for the PHP versions depage-fs supports.</description>
+
+    <file>.</file>
+
+    <exclude-pattern type="relative">^vendor/</exclude-pattern>
+    <exclude-pattern type="relative">^Tests/Report/</exclude-pattern>
+    <exclude-pattern type="relative">^Tests/Temp/</exclude-pattern>
+    <exclude-pattern type="relative">^Tests/docker/</exclude-pattern>
+
+    <arg name="basepath" value="."/>
+    <arg name="colors"/>
+    <arg name="parallel" value="4"/>
+
+    <!-- keep in sync with the php requirement in composer.json and the CI matrix -->
+    <config name="testVersion" value="8.3-8.5"/>
+
+    <rule ref="PHPCompatibility"/>
+</ruleset>

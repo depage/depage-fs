@@ -2,6 +2,7 @@
 
 namespace Depage\Fs\Streams;
 
+use Depage\Fs\Exceptions\FsException;
 use Depage\Fs\Fs;
 
 class FtpCurl
@@ -57,7 +58,7 @@ class FtpCurl
         }
 
         if (!static::$handle) {
-            trigger_error('Could not initialize cURL.', E_USER_ERROR);
+            throw new FsException('Could not initialize cURL.');
         }
 
         $username = $parsed['user'];
@@ -113,7 +114,7 @@ class FtpCurl
     protected function curlSet($option, $value)
     {
         if (!curl_setopt(static::$handle, $option, $value)) {
-            trigger_error(sprintf('Could not set cURL option: %s', $option), E_USER_ERROR);
+            throw new FsException(sprintf('Could not set cURL option: %s', $option));
         }
     }
     // }}}
@@ -137,7 +138,7 @@ class FtpCurl
             && curl_errno(static::$handle) !== 9
             && curl_errno(static::$handle) !== 21
         ) {
-            trigger_error(curl_error(static::$handle), E_USER_ERROR);
+            throw new FsException(curl_error(static::$handle) ?: 'cURL request failed.');
         }
 
         return $result;
