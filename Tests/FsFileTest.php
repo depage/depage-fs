@@ -7,24 +7,6 @@ use Depage\Fs\Exceptions\FsException;
 
 class FsFileTest extends OperationsTestCase
 {
-    // {{{ setUp
-    public function setUp():void
-    {
-        $this->assertTrue($this->src->setUp());
-        $this->assertTrue(chdir($this->src->getRoot()));
-
-        $this->fs = $this->createTestObject();
-    }
-    // }}}
-    // {{{ tearDown
-    public function tearDown():void
-    {
-        $this->assertTrue($this->src->tearDown());
-
-        $this->assertTrue(chdir($this->root));
-    }
-    // }}}
-
     // {{{ createDst
     public function createDst()
     {

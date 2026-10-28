@@ -108,7 +108,7 @@ class FsSshKeyTest extends FsSshTest
     public function testConnectInvalidPublicKeyString()
     {
         $this->expectException(FsException::class);
-        $this->expectExceptionMessage("ssh2_auth_pubkey_file(): Authentication failed for testuser using public key: Invalid public key data");
+        $this->expectExceptionMessage("SSH authentication failed for user \"testuser\".");
 
         $params = array(
             'tmp' => '/tmp',

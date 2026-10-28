@@ -7,18 +7,15 @@ use Depage\Fs\Streams\FtpCurl;
 
 class FsFtpTest extends OperationsTestCase
 {
-    // {{{ constructor
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->cert = $this->root . '/' . $GLOBALS['CA_CERT'];
-    }
+    // {{{ variables
+    protected $cert;
     // }}}
 
     // {{{ setUp
-    public function setUp():void
+    protected function setUp(): void
     {
+        $this->cert = __DIR__ . '/' . $GLOBALS['CA_CERT'];
+
         FtpCurl::disconnect();
         parent::setUp();
     }

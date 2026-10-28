@@ -4,6 +4,10 @@ namespace Depage\Fs\Tests;
 
 class HelperFsLocal
 {
+    // {{{ variables
+    protected $root;
+    // }}}
+
     // {{{ constructor
     public function __construct($root)
     {

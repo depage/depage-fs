@@ -7,19 +7,20 @@ use Depage\Fs\Exceptions\FsException;
 
 abstract class OperationsTestCase extends TestCase
 {
-    // {{{ constructor
-    public function __construct($name = null, array $data = [], $dataName = '')
-    {
-        parent::__construct($name, $data, $dataName);
-        $this->root = __DIR__;
-        $this->src = $this->createSrc();
-        $this->dst = $this->createDst();
-    }
+    // {{{ variables
+    protected $root;
+    protected $src;
+    protected $dst;
+    protected $fs;
     // }}}
 
     // {{{ setUp
-    public function setUp():void
+    protected function setUp(): void
     {
+        $this->root = __DIR__;
+        $this->src = $this->createSrc();
+        $this->dst = $this->createDst();
+
         $this->assertTrue($this->src->setUp());
         $this->assertTrue($this->dst->setUp());
         $this->assertTrue(chdir($this->src->getRoot()));
@@ -28,7 +29,7 @@ abstract class OperationsTestCase extends TestCase
     }
     // }}}
     // {{{ tearDown
-    public function tearDown():void
+    protected function tearDown(): void
     {
         $this->assertTrue($this->src->tearDown());
         $this->assertTrue($this->dst->tearDown());
@@ -40,7 +41,19 @@ abstract class OperationsTestCase extends TestCase
     // {{{ createSrc
     protected function createSrc()
     {
-        return new HelperFsLocal($this->root . '/Temp');
+        return new HelperFsLocal($this->tempRoot());
+    }
+    // }}}
+    // {{{ tempRoot
+    // the local test sandbox is churned (rm -rf + mkdir) between every test;
+    // on container bind mounts (e.g. Docker Desktop on macOS) directory
+    // unlinks propagate lazily, which makes the tests flaky - point
+    // TEST_TMP_DIR at container-local storage to avoid that
+    protected function tempRoot()
+    {
+        $base = !empty($GLOBALS['TEST_TMP_DIR']) ? $GLOBALS['TEST_TMP_DIR'] : $this->root;
+
+        return $base . '/Temp';
     }
     // }}}
 

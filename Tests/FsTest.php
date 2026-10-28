@@ -9,6 +9,10 @@ use PHPUnit\Framework\TestCase;
 
 class FsTest extends TestCase
 {
+    // {{{ variables
+    protected $fs;
+    // }}}
+
     // {{{ createTestObject
     public function createTestObject($override = array())
     {
@@ -22,7 +26,7 @@ class FsTest extends TestCase
     }
     // }}}
     // {{{ setUp
-    public function setUp():void
+    protected function setUp(): void
     {
         $this->fs = $this->createTestObject();
     }

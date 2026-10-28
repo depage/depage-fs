@@ -7,26 +7,27 @@ use PHPUnit\Framework\TestCase;
 
 class FtpCurlTest extends TestCase
 {
-    // {{{ constructor
-    public function __construct($name = null, array $data = [], $dataName = '')
-    {
-        parent::__construct($name, $data, $dataName);
+    // {{{ variables
+    protected $root;
+    protected $cert;
+    protected $src;
+    protected $dst;
+    protected $url;
+    // }}}
 
+    // {{{ setUp
+    protected function setUp(): void
+    {
         $this->root = __DIR__;
         $this->cert = $this->root . '/' . $GLOBALS['CA_CERT'];
-        $this->src = new HelperFsLocal($this->root . '/Temp');
+        $this->src = new HelperFsLocal(!empty($GLOBALS['TEST_TMP_DIR']) ? $GLOBALS['TEST_TMP_DIR'] . '/Temp' : $this->root . '/Temp');
         $this->dst = new HelperFsRemote('/Temp');
 
         $this->url = 'ftp://' .
             $GLOBALS['REMOTE_USER'] . ':' .
             $GLOBALS['REMOTE_PASS'] . '@' .
             $GLOBALS['REMOTE_HOST'] . '/Temp/';
-    }
-    // }}}
 
-    // {{{ setUp
-    public function setUp():void
-    {
         FtpCurlTestClass::registerStream('ftp', ['caCert' => $this->cert]);
 
         $this->assertTrue($this->src->setUp());
@@ -36,7 +37,7 @@ class FtpCurlTest extends TestCase
     }
     // }}}
     // {{{ tearDown
-    public function tearDown():void
+    protected function tearDown(): void
     {
         FtpCurlTestClass::disconnect();
 

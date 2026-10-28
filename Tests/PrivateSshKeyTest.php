@@ -7,9 +7,15 @@ use Depage\Fs\Exceptions\FsException;
 
 class PrivateSshKeyTest extends PublicSshKeyTest
 {
+    // {{{ variables
+    protected $publicKeyPath;
+    // }}}
+
     // {{{ setUp
-    public function setUp():void
+    protected function setUp(): void
     {
+        parent::setUp();
+
         $this->keyPath = __DIR__ . '/' . $GLOBALS['PRIVATE_RSA_KEY'];
         $this->publicKeyPath = __DIR__ . '/' . $GLOBALS['PUBLIC_RSA_KEY'];
         $this->testKey = file_get_contents($this->keyPath);

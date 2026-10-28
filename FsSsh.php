@@ -43,12 +43,17 @@ class FsSsh extends Fs
     // {{{ getConnection
     protected function getConnection(&$fingerprint = null)
     {
+        $port = $this->url['port'] ?? 22;
+        $options = [
+            'client_to_server' => [
+                'comp' => 'zlib,none',
+            ],
+            'server_to_client' => [
+                'comp' => 'zlib,none',
+            ],
+        ];
         if (!$this->connection) {
-            if (isset($this->url['port'])) {
-                $this->connection = \ssh2_connect($this->url['host'], $this->url['port']);
-            } else {
-                $this->connection = \ssh2_connect($this->url['host']);
-            }
+            $this->connection = \ssh2_connect($this->url['host'], $port);
         }
         $fingerprint = \ssh2_fingerprint($this->connection);
 
@@ -75,12 +80,22 @@ class FsSsh extends Fs
                 || $this->publicKey
                 || $this->tmp
             ) {
-                $this->authenticateByKey($connection);
+                $authenticated = $this->authenticateByKey($connection);
             } else {
-                $this->authenticateByPassword($connection);
+                $authenticated = $this->authenticateByPassword($connection);
             }
 
-            $this->session = \ssh2_sftp($connection);
+            if (!$authenticated) {
+                throw new Exceptions\FsException('SSH authentication failed for user "' . $this->url['user'] . '".');
+            }
+
+            $session = \ssh2_sftp($connection);
+
+            if (!$session) {
+                throw new Exceptions\FsException('Could not open SFTP session on host "' . $this->url['host'] . '".');
+            }
+
+            $this->session = $session;
         }
 
         return $this->session;
@@ -89,7 +104,10 @@ class FsSsh extends Fs
     // {{{ authenticateByPassword
     protected function authenticateByPassword($connection)
     {
-        return \ssh2_auth_password(
+        // the return value is checked by the caller; the ssh2 extension's
+        // warning on failure would be redundant (and leak unhandled, as
+        // authentication runs before the fs error handler is installed)
+        return @\ssh2_auth_password(
             $connection,
             $this->url['user'],
             $this->url['pass']
@@ -117,7 +135,7 @@ class FsSsh extends Fs
             $public = $private->extractPublicKey($this->tmp);
         }
 
-        $authenticated = \ssh2_auth_pubkey_file(
+        $authenticated = @\ssh2_auth_pubkey_file(
             $connection,
             $this->url['user'],
             $public,
@@ -175,21 +193,21 @@ class FsSsh extends Fs
     // {{{ rename
     protected function rename($source, $target)
     {
-        $result = true;
-
         // workaround, rename doesn't overwrite files via ssh
         if (is_file($target) && is_file($source)) {
             $this->rm($target);
-            $result = !is_file($target);
         }
 
-        if ($result) {
-            //parent::rename($source, $target);
-            \ssh2_sftp_rename($this->session, $source, $target);
-            $result = is_file($target);
+        // ssh2_sftp_rename wants plain remote paths, not wrapper urls
+        // (which are of the form ssh2.sftp://<session-resource>/path)
+        $plainSource = preg_replace(';^ssh2\.sftp://[^/]*;', '', $source);
+        $plainTarget = preg_replace(';^ssh2\.sftp://[^/]*;', '', $target);
+
+        if (!\ssh2_sftp_rename($this->session, $plainSource, $plainTarget)) {
+            throw new Exceptions\FsException('Cannot rename "' . $plainSource . '" to "' . $plainTarget . '".');
         }
 
-        return $result;
+        return true;
     }
     // }}}
 }

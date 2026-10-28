@@ -8,8 +8,13 @@ use Depage\Fs\Exceptions\FsException;
 
 class PublicSshKeyTest extends TestCase
 {
+    // {{{ variables
+    protected $keyPath;
+    protected $testKey;
+    // }}}
+
     // {{{ setUp
-    public function setUp():void
+    protected function setUp(): void
     {
         $this->keyPath = __DIR__ . '/' . $GLOBALS['PUBLIC_RSA_KEY'];
         $this->testKey = file_get_contents($this->keyPath);

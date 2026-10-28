@@ -1,30 +1,38 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<phpunit bootstrap="Bootstrap.php">
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="Bootstrap.php"
+         cacheDirectory=".phpunit.cache"
+         colors="true">
+    <testsuites>
+        <testsuite name="depage-fs">
+            <directory suffix="Test.php">.</directory>
+        </testsuite>
+    </testsuites>
     <php>
-        <var name="REMOTE_HOST" value="localhost" />
+        <var name="REMOTE_HOST" value="server" />
         <var name="REMOTE_USER" value="testuser" />
         <var name="REMOTE_PASS" value="testpass" />
         <var name="PRIVATE_RSA_KEY" value="ssh/rsakey" />
         <var name="PUBLIC_RSA_KEY" value="ssh/rsakey.pub" />
         <var name="PRIVATE_DSA_KEY" value="ssh/dsakey" />
         <var name="PUBLIC_DSA_KEY" value="ssh/dsakey.pub" />
+        <var name="PRIVATE_DSA_KEY" value="ssh/dsakey" />
+        <var name="PUBLIC_DSA_KEY" value="ssh/dsakey.pub" />
         <var name="SSH_FINGERPRINT" value="7d6d3ba638b39d166a48dbe7638474e3" />
         <var name="SSH_KEYPASS" value="testkeypass" />
         <var name="CA_CERT" value="docker/ssl/ca.pem" />
+        <!-- base directory for the local test sandbox (<base>/Temp); lives on
+             container-local storage, not on the project bind mount -->
+        <var name="TEST_TMP_DIR" value="/tmp/depage-fs" />
     </php>
-    <filter>
-        <whitelist>
+    <source>
+        <include>
             <directory>../</directory>
-            <exclude>
-                <directory>../Tests</directory>
-                <directory>../vendor</directory>
-            </exclude>
-        </whitelist>
-    </filter>
-    <logging>
-        <log
-        type="coverage-html"
-        target="Report"
-        />
-    </logging>
+        </include>
+        <exclude>
+            <directory>../Tests</directory>
+            <directory>../vendor</directory>
+        </exclude>
+    </source>
 </phpunit>

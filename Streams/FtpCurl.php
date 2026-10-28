@@ -14,6 +14,8 @@ class FtpCurl
     protected $buffer;
     protected $pos;
     protected $dirPos;
+    protected $files;
+    protected $url;
     protected $translation = ['dev', 'ino', 'mode', 'nlink', 'uid', 'gid', 'rdev', 'size', 'atime', 'mtime', 'ctime', 'blksize', 'blocks'];
 
     static protected $parameters;
@@ -42,8 +44,10 @@ class FtpCurl
     protected function createHandle($url, $hostOnly = false)
     {
         $parsed = Fs::parseUrl($url);
+        $parsed['path'] = str_replace(" ", "%20", $parsed['path']);
         $host = preg_replace('#' . preg_quote($parsed['path']) . '(/)?$#', '', $url);
         $path = (isset($parsed['path'])) ? $parsed['path'] : '/';
+        $url = str_replace(" ", "%20", $url);
 
         if (static::$handle) {
             curl_reset(static::$handle);
@@ -60,7 +64,8 @@ class FtpCurl
         $password = (isset($parsed['pass'])) ? $parsed['pass'] : '';
 
         $options = [
-            CURLOPT_USERPWD        => $username . ':' . $password,
+            CURLOPT_USERNAME       => rawurldecode($username),
+            CURLOPT_PASSWORD       => rawurldecode($password),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_PORT           => (isset($parsed['port'])) ? $parsed['port'] : 21,
             CURLOPT_FOLLOWLOCATION => true,
@@ -250,7 +255,6 @@ class FtpCurl
 
             $this->curlSet(CURLOPT_INFILE, $this->buffer);
             $this->curlSet(CURLOPT_INFILESIZE, $this->pos);
-            $this->curlSet(CURLOPT_BINARYTRANSFER, true);
 
             $result = ($this->execute() === false) ? false : true;
         }
