@@ -6,11 +6,29 @@ on:
 
 jobs:
   phpunit:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.3', '8.4', '8.5']
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run test suite in docker (mock server + phpunit runner)
-        run: make test
-        working-directory: Tests
+      - name: Set up PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: ssh2, curl, dom, mbstring, xml
+          coverage: none
+
+      # sshd + vsftpd directly on the runner, instead of the docker server
+      # image used for local runs (see Tests/docker)
+      - name: Set up test services
+        run: Tests/ci/setup-services.sh
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Run tests
+        run: vendor/bin/phpunit --configuration Tests/PHPUnit.xml

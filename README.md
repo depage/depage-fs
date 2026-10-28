@@ -82,7 +82,9 @@ generated (and subsequently deleted) in a temporary directory specified by the
 Testing
 -------
 
-The test suite runs in docker: a phpunit runner container and a mock server
+The test suite needs an ssh server and an ftp server as remote targets.
+
+Locally this runs in docker: a phpunit runner container and a mock server
 container (vsftpd + sshd), connected through a docker network. Requires
 docker with the compose plugin.
 
@@ -91,6 +93,10 @@ make -C Tests test        # build images, start mock server, run phpunit
 make -C Tests server      # only start the mock server (for debugging)
 make -C Tests clean       # remove containers, volumes and test artifacts
 ```
+
+On CI (GitHub Actions) the same services are provisioned directly on the
+runner by Tests/ci/setup-services.sh (no docker), which allows testing a
+matrix of php versions (8.3, 8.4, 8.5) in parallel.
 
 License (dual)
 --------------
