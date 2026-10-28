@@ -1,0 +1,9 @@
+/vendor/
+/composer.phar
+/composer.lock
+.DS_Store
+
+/Tests/Temp/
+/Tests/Report/
+/Tests/.phpunit.cache/
+/Tests/docker/ssl/ca.pem

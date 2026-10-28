@@ -1,6 +1,6 @@
-FROM debian:jessie
+FROM debian:trixie-slim
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update
 RUN apt-get install -y vsftpd supervisor openssh-server openssl
@@ -29,6 +29,11 @@ RUN chmod 600 /etc/ssl/private/*
 COPY ssh/ssh_host_rsa_key /etc/ssh/ssh_host_rsa_key
 COPY ssh/ssh_host_rsa_key.pub /etc/ssh/ssh_host_rsa_key.pub
 RUN chmod 600 /etc/ssh/ssh_host_rsa_key
+
+# test sshd config: pin the RSA host key (fixed fingerprint in the tests) and
+# allow RSA signatures, which are disabled by default in modern OpenSSH
+RUN mkdir -p /etc/ssh/sshd_config.d
+COPY sshd_tests.conf /etc/ssh/sshd_config.d/10-tests.conf
 
 RUN useradd -m -p co.yjyxRTlonU testuser
 

@@ -1,14 +1,16 @@
 RM = rm -rf
 
-PHONY: test server clean
+.PHONY: test server clean
 
-test: server
-	../vendor/bin/phpunit --configuration PHPUnit.xml .
+# run the phpunit test suite inside the runner container against the
+# mock server container (see docker/docker-compose.yml)
+test:
+	$(MAKE) -C docker test
 
+# only start the mock server container (useful for debugging)
 server:
-	$(MAKE) -C docker
-	$(MAKE) run -C docker
+	$(MAKE) -C docker up
 
 clean:
-	${RM} Report Temp docker/ssl/ca.pem
+	$(RM) Report Temp .phpunit.cache docker/ssl/ca.pem
 	$(MAKE) clean -C docker

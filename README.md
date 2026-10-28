@@ -79,6 +79,19 @@ make sure the connection is encrypted. Susceptible to MITM attacks!
 generated (and subsequently deleted) in a temporary directory specified by the
 'tmp'-parameter.
 
+Testing
+-------
+
+The test suite runs in docker: a phpunit runner container and a mock server
+container (vsftpd + sshd), connected through a docker network. Requires
+docker with the compose plugin.
+
+```sh
+make -C Tests test        # build images, start mock server, run phpunit
+make -C Tests server      # only start the mock server (for debugging)
+make -C Tests clean       # remove containers, volumes and test artifacts
+```
+
 License (dual)
 --------------
 
